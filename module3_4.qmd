@@ -9,16 +9,18 @@ This is a markdown walkthrough of the problem sets for this week. Feel free to u
 
 ## Required Packages
 
-We will use *tidyverse* to assist with data processing and plotting. Please note, when you install packages, you will see the installation details. I am hiding these details within this document to make it easier to read and follow.
+We will use *tidyverse* to assist with data processing and plotting. We are also downloading *curl* to assist with data downloading. Please note, when you install packages, you will see the installation details. I am hiding these details within this document to make it easier to read and follow.
 
 ```{r,eval=F}
 # if running for the first time, install
 install.packages("tidyverse")
+install.packages("curl")
 ```
 
 ```{r,results=FALSE,message=FALSE}
 # load tidyverse
 library(tidyverse)
+library(curl)
 ```
 
 If you ever need to cite this package, you can find the information like so:
@@ -58,45 +60,48 @@ To continue gaining familiarity with the *R* statistical framework by using *RSt
 
 We will be working with two fictional datasets. These datasets are available on the *Module 3 Problem Set Assignment* page in Canvas. Dataset 2 is similar to that used in the Module 2 problem set, but not exactly the same, so be sure to use the correct dataset for this problemset.
 
+These data can be downloaded as `.csv` files from the [class dataset repository](https://github.com/jacobccooper/biol827-statistics/tree/main/datasets) and imported locally or downloaded directly from the source as follows.
+
 ### Dataset 1
 
 In this study, researchers examined the effect of control versus reduced food intake (`FoodIntake`) on the longevity (`LifeSpan.yr`) of male and female (`Sex`) monkeys. These data are from Whitlock and Schluter (2015, 2nd Edition) problem 35, page 63.
 
-This dataset can be downloaded directly from *GitHub* with the following code:
+Copy and paste the following code to import the `Monkey` dataset into your *R* session. Your output should look like the following.
 
-```{r,eval=F}
-Monkey
+```{r}
+Monkey <- curl("https://raw.githubusercontent.com/jacobccooper/biol827-statistics/main/datasets/module3_4-monkey_data.csv") %>%
+  read_csv()
 ```
 
--   `BIOL827.03 Problem Set Data 1.csv`
+And the data should appear as follows:
+
+```{r}
+head(Monkey)
+```
 
 ### Dataset 2
 
-A researcher was conducting an exercise physiology study. The research team wanted to know whether volunteers of different sexes (`Sex`) differed in physical characteristics, especially Body Mass Index (`BMI`), over the first five weeks (`Week`) of the study and if there was a change in their oxygen consumption during exercise (V$O_2$ max, measured as mm/kg body weight) over this time. For each volunteer, the research team recorded the initial weight (`Weight.kg`), height (`Height.m`), and V$O_2$ max (`VO2`) of each participant. These data were randomly generated; any patterns are unintentional.
+A researcher was conducting an exercise physiology study. The research team wanted to know whether volunteers of different sexes (`Sex`) differed in physical characteristics, especially Body Mass Index (`BMI`), over the first five weeks (`Week`) of the study and if there was a change in their oxygen consumption during exercise (V$O_2$ max, measured as mm/kg body weight) over this time. For each volunteer, the research team recorded the initial weight (`Weight.kg`), height (`Height.m`), and V$O_2$ max (`VO2`) of each participant. These data were randomly generated; any patterns are unintentional. We will name these data `BMI` in *R*.
 
--   `BIOL827.03 Problem Set Data 2.csv`
+```{r}
+BMI <- curl("https://raw.githubusercontent.com/jacobccooper/biol827-statistics/main/datasets/module3_4-physiology_data.csv") %>%
+  read_csv()
+```
+
+When you preview your data, they should look as follows:
+
+```{r}
+head(BMI)
+```
 
 ## Procedure
 
-Please note that this is not quite identical to the regular module PDFs, but is close.
-
-1.  Watch Module 3: Describing and Visualizing Data in R for a walk-through of these initial procedures. *Note* that this video will vary slightly from this particular document.
+1.  Watch [*Module 3: Describing and Visualizing Data in R*]{.underline} for a walk-through of these initial procedures. ***Note*** that this video may vary slightly from this particular document.
 2.  Open a new *R* script in the source pane by clicking on the `File menu > New File > R Script`.
-3.  If necessary, clear the environment and plots panes from R’s memory by clicking the broom icon at the top of both of these panes and clear the console by clicking on `Edit menu > Clear Console`.
+3.  If necessary, clear the environment and plots panes from *R*’s memory by clicking the broom icon at the top of both of these panes and clear the console by clicking on `Edit menu > Clear Console`.
 4.  Set your working directory and import both datasets. Review Modules 1 and 2 procedures, if necessary, for a reminder of how to complete these tasks.
 
--   For these procedures and video, dataset 1 was imported as a `dataframe` object named ‘`Monkey`’, and dataset 2 as a `dataframe` object named ‘`BMI`’.
-
-```{r,echo=F}
-# NOTE: I am not setting my working directory
-# I am declaring the filepath once
-# Posting whole address of file to load
-
-filepath <- "~/OneDrive - University of Nebraska at Kearney/Classes/Semi-Permanent Class Material/BIOL 827/Module Problemsets/Module 3/"
-
-Monkey <- read.csv(paste0(filepath,"BIOL827.03 Problem Set Data 1.csv"))
-BMI <- read.csv(paste0(filepath,"BIOL827.03 Problem Set Data 2.csv"))
-```
+-   For these procedures and video, `dataset 1` refers to the `Monkey` dataset and `dataset 2` refers to the `BMI` dataset.
 
 Descriptive statistics refers to simple calculations that summarize or describe a given variable. Measures of central tendency commonly used are the *mean* (i.e., *average*) and *median* (i.e, $50^{th}$ percentile). Corresponding measures of spread are *standard deviation* (accompanying the mean) and *interquartile range* or $25^{th}$ and $75^{th}$ percentiles (accompanying the median).
 
@@ -104,20 +109,45 @@ Descriptive statistics refers to simple calculations that summarize or describe 
 
 5.  Use the `Monkey` dataset (Data 1) to calculate the *mean* and *standard deviation* of `LifeSpan.yr` variable separately for each `FoodIntake` treatment (Control, Reduced) by hand using equations provided in the textbook. Afterwards, calculate these values using *RStudio*!
 
-6.  To do this, subset the Monkey dataframe using the subset function. Create one subset with data for individuals in the reduced food intake group and one for those in the control group (Figure 1).
+6.  To do this, subset the `Monkey` dataframe using the `subset` function. Create one subset with data for individuals in the reduced food intake group and one for those in the control group.
 
 -   Be sure to give each subset a unique object name to use below.
--   Review use of the subset function in PS1 and PS2, if needed.
+-   Review use of the `subset` function in previous problem sets, if needed.
 
-7.  Next, activate the package ‘pastecs’ using the library() command (Figure 1) so you can use the stat.desc function.
+```{r}
+Monkey.reduced <- subset(Monkey, FoodIntake == "Reduced")
+Monkey.control <- subset(Monkey, FoodIntake == "Control")
+```
 
--   Review instructions for activating a package in PS2, if needed.
+7.  Next, activate the package *pastecs* using the `library` command so you can use the `stat.desc` function.
 
-8.  Run the function ‘stat.desc’ on the LifeSpan.yr variable for each subset (Control and Reduced) separately (Figure 1).
+-   Review instructions for activating a package in previous problem sets, if needed.
+
+```{r}
+library(pastecs)
+```
+
+You can ignore the above warnings, but these refer to "conflicts" with same-named commands in different packages. We will not be using these commands in this module, but the issue can be circumvented by naming the package in the command (e.g., `dplyr::first` vs. `pastecs::first`).
+
+8.  Run the function `stat.desc` on the `LifeSpan.yr` variable for each subset (`Control` and `Reduced`) separately.
 
 -   If necessary, highlight the object name to print the output to the console pane.
 
-9.  Compare the mean and standard deviation (std.dev) for each food intake group to those you calculated by hand. They should be the same.
+```{r}
+stat.desc(Monkey.reduced$LifeSpan.yr)
+```
+
+```{r}
+stat.desc(Monkey.control$LifeSpan.yr)
+```
+
+*Note* that if so desired, we can also have *R* round all of these outputs to a specific value for us:
+
+```{r}
+round(stat.desc(Monkey.control$LifeSpan.yr),2)
+```
+
+9.  Compare the mean and standard deviation (`std.dev`) for each food intake group to those you calculated by hand. They should be the same.
 
 -   Also, note the median is provided in this output.
 
@@ -125,153 +155,278 @@ Descriptive statistics refers to simple calculations that summarize or describe 
 
 Quantiles are a way of looking at the response value at which a given percentage of observations are captured. The most common quantiles are the 25th, 50th, and 75th percentiles. This specific set of quantiles are also called quartiles: 1st quartile (25th percentile), median (50th percentile), and 3rd quartile (75th percentile). The interquartile range (IQR) measures spread representing the middle 50% of observations; that is, 25% of observations fall below the 25th percentile and 25% of observations are above the 75th percentile.
 
-10. Calculate the median, first quartile, third quartile, and interquartile range separately for each FoodIntake group (Control, Reduced) by hand using the information provided in the textbook and/or lecture material. Now, calculate it using RStudio.
+10. Calculate the median, first quartile, third quartile, and interquartile range separately for each `FoodIntake` group (`Control`, `Reduced`) by hand using the information provided in the textbook and/or lecture material. Now, calculate it using *RStudio*.
 
-11. To do this, use the function ‘quantile’ separately for each FoodIntake group (Control, Reduced) using the command: object \<- quantile(Dataframe\$Variable) (Figure 2).
+11. To do this, use the function `quantile` separately for each `FoodIntake` group (`Control`, `Reduced`) using the following: object \<- quantile(Dataframe\$Variable) (Figure 2).
+
+```{r,eval=FALSE}
+# generic format for quantile function
+object <- quantile(dataframe$variable)
+```
 
 -   By default, the quantile function returns the following percentiles: 0%, 25%, 50%, 75%, 100%.
--   Compare results for the 50% output from function quantile to the median calculated by hand and from stat.desc for each FoodIntake group. They should match.
+-   Compare results for the 50% output from function quantile to the median calculated by hand and from `stat.desc` for each `FoodIntake` group. They should match.
 
-12. Calculate IQR in RStudio using function ‘IQR’ separately for each FoodIntake group (Control, Reduced) using the command: `object <- IQR(Dataframe$Variable)` (Figure 2).
+An example for the control group is shown here:
 
-13. Compare these values to those you computed by hand. They should be the same. Section C. Install and activate the ggplot2 R add-on package
+```{r}
+control.quantiles <- quantile(Monkey.control$LifeSpan.yr)
 
-14. Click on the Packages tab in the lower-right panel and install ggplot2.
+print(control.quantiles)
+```
 
--   Review instructions on how to install a package in PS2, if needed.
+12. Calculate IQR in *RStudio* using function `IQR` separately for each `FoodIntake` group (`Control`, `Reduced`) using the command: `object <- IQR(Dataframe$Variable)`.
 
-15. Once installed, go to the source panel and activate the package (Figure 3).
-
--   Review instructions on how to activate a package in PS2, if needed.
+13. Compare these values to those you computed by hand. They should be the same.
 
 ### Section D. \[Optional\] Create histogram using function ggplot
 
-There are multiple ways to graph data in R, to illustrate we can compare histograms produced using the hist() function from PS1 and PS2 and using function ggplot() in the ggplot2 package.
+There are multiple ways to graph data in *R*, to illustrate we can compare histograms produced using the `hist` function and `ggplot` in the *ggplot2* package (and included within the already-loaded *tidyverse* package).
 
-16. For each FoodIntake group (Reduced, Control), create a histogram using the function hist (Figure 3).
+14. For each `FoodIntake` group (`Reduced`, `Control`), create a histogram using the function `hist`.
 
--   Review instructions on how to do this in PS1, if needed.
+Example histogram for `Control`:
 
-17. For each FoodIntake group (Reduced, Control), create a histogram using the function ggplot. ggplot has the generic syntax: Object \<- ggplot(Dataframe, aes(x.variable, y.variable)) + geom_histogram() (Figure 3).
+```{r}
+hist(Monkey.control$LifeSpan.yr)
+```
 
--   ggplot(): identifies the dataframe and the aesthetics with the aes() attribute.
--   aes(): goes within the ggplot function. Here, identify the variables to be associated with the x-axis and y-axis of any graph produced. Other attributes can also be specified here, but we’ll get to more on that later.
--   geom_histogram(): this tells ggplot that the type of graph to make is a histogram.
+14. For each `FoodIntake` group (`Reduced`, `Control`), create a histogram using the function `ggplot`. `ggplot` has the generic syntax:
 
-18. Highlight the command and click Run. To view the graph in the plots panel, highlight or type the object name) and click Run.
+```{r,eval=FALSE}
+Object <- ggplot(Dataframe, aes(x.variable, y.variable)) + geom_histogram()
+```
 
-19. Compare the histograms created by the hist function to those from ggplot. They should look very different. This is because the default in ggplot() is to create histograms with 30 bins, while the number of bins in the graph created with the hist() function is determined by an algorithm and on the nature of observations in the dataset.
+Where:
 
-20. Change the number of bins in the ggplot histogram by adding bins=5 or bins=6 inside the parentheses of the geom_histogram function (Figure 4).
+-   `ggplot`: identifies the dataframe and the aesthetics with the `aes()` attribute.
+-   `aes()`: goes within the ggplot function. Here, identify the variables to be associated with the *x*-axis and *y*-axis of any graph produced. Other attributes can also be specified here, but we’ll get to more on that later.
+-   `geom_histogram()`: this tells `ggplot` that the type of graph to make is a histogram. You can specify the number of bins desired by using the `bins` argument here, otherwise *R* with suggest a default number.
+
+Example using the `Control` subset:
+
+```{r}
+ggplot(data = Monkey.control, aes(x = LifeSpan.yr)) +
+  geom_histogram(bins = 10)
+```
+
+18. Highlight the command and click `Run`. To view the graph in the plots panel, highlight or type the object name) and click `Run`. You can also click `Control` + `Enter` (Windows, Linux) or `Command` + `Enter` (Mac) to automatically run the same line as the cursor.
+
+19. Compare the histograms created by the `hist` function to those from `ggplot`. They should look very different. This is because the default in `ggplot` is to create histograms with 30 bins or the number of bins specified, while the number of bins in the graph created with the `hist` function is determined by an algorithm and on the nature of observations in the dataset.
+
+20. Change the number of bins in the `ggplot` histogram by altering the `bins` argument to values such as `bins=5` or `bins=6` inside the parentheses of the `geom_histogram` function.
 
 ### Section E. Create a boxplot using package ggplot2
 
-21. Create one boxplot that illustrates both FoodIntake groups (Reduced, Control) on the x-axis using function ggplot. The generic syntax is: Object \<- ggplot(Dataframe, aes(x.variable, y.variable)) + geom_boxplot() (Figure 5).
+21. Create one boxplot that illustrates both `FoodIntake` groups (`Reduced`, `Control`) on the $x$-axis using function `ggplot`. The generic syntax is:
 
--   ggplot(): identifies the dataframe and the aesthetics with the aes() attribute. In this case, we will call the dataframe ‘Monkey’ because it has data for both Control and Reduced food intake groups.
+```{r,eval=FALSE}
+Object <- ggplot(Dataframe, aes(x.variable, y.variable)) + 
+  geom_boxplot()
+```
 
-Box 1. ggplot function syntax object \<- ggplot(dataframe, aes(x, y)) + geom\_() The ggplot2 package includes a wide variety of options for the content and format of graphs – both in the types of graphs drawn and how they are formatted. We will keep it to the simplest basics this week and introduce additional options later. Types of graphs we will work with this week:
+-   `ggplot`: identifies the dataframe and the aesthetics with the `aes()` attributes. In this case, we will call the dataframe `Monkey` because it has data for both `Control` and `Reduced` food intake groups.
+-   `xlab`, `ylab`, `theme_classic`: these are graphical parameters that change the axes labels and clean up the background, respectively. Try running the code with and without these parameters.
 
--   geom_histogram(): creates a frequency histogram, only a y variable needs to be identified in the ggplot() portion of the command.
--   geom_boxplot(): creates a boxplot displaying the medan (bold line), 1st and 3rd quartiles (box), 1.5 times the iqr (whiskers), and outliers (circles).
--   geom_bar(): creates a bar chart. if specified, the x variable should represent categories to be graphed separately.
--   geom_point(): creates an xy scatterplot. both x and y variables should have numeric data.
--   geom_line(): creates a line plot. typically, a time variable is represented on the x-axis. Customization introduced this week:
--   To create graphs with groupings, include a group=GroupingVariable attribute after the y variable in aes() so it becomes aes(x, y, group=).
--   To have a different color represent each group, also add a color=“ColorName” attribute after the group attribute so it becomes aes(x, y, group=, color=).
--   To change the axis labels, add + labs(x=NewXName, y=NewYName, title=”Graph title”) after the geom() portion of the command.
--   aes(): this goes within the ggplot function. Here, identify the variables to be associated with the x-axis and y-axis of any graph produced.
--   geom_boxplot(): this tells ggplot that the type of graph to make is a standard boxplot (see more in Box 1).
+```{r}
+plot1 <- ggplot(Monkey, aes(x = FoodIntake, y = LifeSpan.yr)) +
+  geom_boxplot()
 
-22. Highlight the command and click Run. To view the graph in the plots panel, highlight or type the object name) and click Run.
+print(plot1)
+```
+
+```{r}
+plot2 <- ggplot(Monkey, aes(x = FoodIntake, y = LifeSpan.yr)) +
+  geom_boxplot() +
+  xlab("Food Intake") +
+  ylab("Lifespan (Years)") +
+  theme_classic()
+
+print(plot2)
+```
+
+There are many other types of graphs that we will create in this class using *R* as well, including:
+
+-   `geom_histogram`: creates a frequency histogram, only a $y$ variable needs to be identified in the `ggplot` portion of the command.
+-   `geom_boxplot`: creates a boxplot displaying the median (**bold** line), 1st and 3rd quartiles (box), 1.5 times the interquartile range (whiskers), and outliers (circles).
+-   `geom_bar`: creates a bar chart. if specified, the $x$ variable should represent categories to be graphed separately.
+-   `geom_point`: creates an $xy$ scatterplot. both $x$ and $y$ variables should have numeric data.
+-   `geom_line`: creates a line plot. typically, a time variable is represented on the $x$-axis.
+
+Customization introduced this week:
+
+-   To create graphs with groupings, include a `group = GroupingVariable` attribute after the $y$ variable in `aes()` so it becomes `aes(x, y, group= variable)`.
+-   To have a different color represent each group, also add a `color = variable` so it becomes `aes(x, y, color = variable)`. To have the color fill the entire box, use `fill = variable`.
+-   To change the axis labels, add `+ labs(x = NewXName, y = NewYName, title = "Graph title")` after the `geom_histogram` portion of the command.
+-   `aes()`: this goes within the `ggplot` function. Here, identify the variables to be associated with the $x$-axis and $y$-axis of any graph produced.
+-   `geom_boxplot`: this tells ggplot that the type of graph to make is a standard boxplot.
+
+22. Run the command(s) to view the plot(s).
 
 ### Section F. Clearly label axes
 
 It is important to clearly label axes to indicate the variable(s) plotted avoiding abbreviations and acronyms as much as possible. Axes labels should always also indicate the unit of measurement that graphed values represent.
 
-23. Add a title to the graph and change the appearance of the axis labels by adding a new layer to the graph created in Section E. After geom_boxplot() and on the same line, add “+”
+23. Add a title to the graph and change the appearance of the axis labels by adding a new layer to the graph created in [Section E. Create a boxplot using package ggplot2]. After `geom_boxplot` and on the same line, add `+`.
 
-24. Go to a new line, and add: labs(x= “x label (units)”, y= “y label (units)”, title= “Graph title”) where the label and units for the x and y axes and graph title are typed within the quotation marks. (For example, see line 58 in Figure 6 below).
+24. Go to a new line (click `enter` or `return`), and add: `labs(x = "x label (units)", y= "y label (units)", title= "Graph title")` where the label and units for the $x$ and $y$ axes and graph title are typed within the quotation marks.
+
+```{r}
+# example plot with colors and labels
+ggplot(Monkey, aes(x = FoodIntake, y = LifeSpan.yr, fill = Sex)) +
+  geom_boxplot() +
+  labs(x = "Food Intake", y = "Lifespan (Years)") +
+  theme_classic()
+```
 
 ### Section G. Create a bar chart using package ggplot2
 
-25. Create one bar chart that illustrates the mean lifespan for each FoodIntake group (Reduced, Control) on the x-axis using function ggplot. The generic syntax is: Object \<- ggplot(Dataframe, aes(x variable, y variable)) + geom_bar(stat=“summary”, fun=“mean”) (Figure 5).
+25. Create one bar chart that illustrates the mean lifespan for each `FoodIntake` group (`Reduced`, `Control`) on the $x$-axis using function `ggplot`. The generic syntax is:
 
--   ggplot(): identifies the dataframe and the aesthetics with the aes() attribute. In this case, we will call the dataframe ‘Monkey’ because it has data for both Control and Reduced food intake groups.
--   aes(): this goes within the ggplot function. Here, identify the variables to be associated with the x-axis and y-axis of any graph produced. Other attributes can also be specified here, but we’ll get to that more later.
--   geom_bar(stat=“summary”, fun=“mean”): this tells ggplot that the type of graph to make is a bar chart and that the values to graph are mean life span calculated from summary statistics.
+```{r,eval=FALSE}
+Object <- ggplot(Dataframe, aes(x = x_variable, y = y_variable)) + 
+  geom_bar(stat = "summary", fun = "mean")
+```
 
-26. Highlight the command and click Run. To view the graph in the plots panel, highlight or type the object name) and click Run.
+-   `ggplot`: identifies the dataframe and the aesthetics with the `aes()` attribute. In this case, we will call the dataframe `Monkey` because it has data for both `Control` and `Reduced` food intake groups.
+-   `aes()`: this goes within the ggplot function. Here, identify the variables to be associated with the $x$-axis and $y$-axis of any graph produced. Other attributes can also be specified here, but we’ll get to that more later.
+-   `geom_bar(stat = "summary", fun = "mean")`: this tells ggplot that the type of graph to make is a bar chart and that the values to graph are mean life span calculated from summary statistics.
+
+26. Run the command(s) to view the plot(s).
+
+Example:
+
+```{r}
+ggplot(Monkey, aes(x = FoodIntake, y = LifeSpan.yr)) +
+  geom_bar(stat = "summary", fun = "mean")
+```
 
 ### Section H. Create an XY scatterplot using package ggplot2
 
-27. Import the second dataset containing the BMI project data.
+27. Import the second dataset containing the `BMI` project data. See instructions in [Dataset 2].
+28. Create one scatterplot that illustrates the relationship between height on the x-axis and weight on the y-axis using function ggplot. The generic syntax is:
 
--   For illustrations here and in the video, I called this dataframe ‘BMI’.
+```{r,eval=FALSE}
+Object <- ggplot(Dataframe, aes(x = x_variable, y = y_variable)) + 
+  geom_point()
+```
 
-28. Create one scatterplot that illustrates the relationship between height on the x-axis and weight on the y-axis using function ggplot. The generic syntax is: Object \<- ggplot(Dataframe, aes(x variable, y variable)) + geom_point() (Figure 6).
+-   `ggplot`: identifies the dataframe and the aesthetics with the `aes()` attribute. In this case, we will call the dataframe `BMI` because it has data for both height and weight variables.
+-   `aes()`: this goes within the ggplot function. Here, identify the variables to be associated with the $x$-axis and $y$-axis of any graph produced.
+-   `geom_point()`: this tells ggplot that the type of graph to represent each set of height-weight observations as a point.
 
--   ggplot(): identifies the dataframe and the aesthetics with the aes() attribute. In this case, we will call the dataframe ‘BMI’ because it has data for both height and weight variables.
--   aes(): this goes within the ggplot function. Here, identify the variables to be associated with the x-axis and y-axis of any graph produced.
--   geom_point(): this tells ggplot that the type of graph to represent each set of height-weight observations as a point.
+29. Run the command(s) to view the plot(s).
 
-29. Highlight the command and click Run. To view the graph in the plots panel, highlight or type the object name) and click Run.
+```{r}
+ggplot(data = BMI, aes(x = Height.m, y = Weight.kg)) +
+  geom_point() +
+  labs(x = "Height (m)", y = "Weight (kg)") +
+  theme_minimal() # plot with only basic lines
+```
+
+Remember, we can add in more parameters as well to make this more data-rich:
+
+```{r}
+ggplot(data = BMI, aes(x = Height.m, y = Weight.kg, color = Sex)) +
+  geom_point(size = 5) + # adjust size
+  labs(x = "Height (m)", y = "Weight (kg)") +
+  theme_minimal() # plot with only basic lines
+```
 
 ### Section I. Create a line graph using package ggplot2
 
-30. Create one line graph that illustrates changes in weight (on the y-axis) over time (on the x-axis) using function ggplot. The generic syntax is: Object \<- ggplot(Dataframe, aes(x variable, y variable)) + geom_line() (Figure 6).
+30. Create one line graph that illustrates changes in weight (on the $y$-axis) over time (on the $x$-axis) using function `ggplot`. The generic syntax is:
 
--   ggplot(): identifies the dataframe and the aesthetics with the aes() attribute. In this case, we will call the dataframe ‘BMI’ because it has data for both height and weight variables.
--   aes(): this goes within the ggplot function. Here, identify the variables to be associated with the x-axis and y-axis of any graph produced.
--   geom_line(): this tells ggplot that the type of graph to represent each weight observation over time is with a continuous line.
+```{r,eval=FALSE}
+Object <- ggplot(Dataframe, aes(x_variable, y_variable)) + 
+  geom_line()
+```
 
-31. Add a title to the graph and change the appearance of the axis labels, we can add a new layer to the graph with: + labs(x= “New X label”, y= “New Y label”, title= “Graph title”) after the geom call (line 58 in Figure 6).
-32. Highlight the command and click Run. To view the graph in the plots panel, highlight or type the object name) and click Run.
-33. Notice that the resulting graph does not seem to make much sense. This is because in this case there were three observations for each time (one from a person of each sex category) and each individual observation is included on the graph. \### Section J. Create a line graph using package ggplot2 with an individual line for each sex
-34. In this case, it would be more meaningful to have a separate line for each sex so we can better examine trends over time. To do this, modify the code from section G or begin a new command in which a grouping variable is identified. The generic syntax is: Object \<- ggplot(Dataframe, aes(x variable, y variable, group=GroupingVariable)) + geom_line() (Figure 7).
+-   `ggplot`: identifies the dataframe and the aesthetics with the `aes()` attribute. In this case, we will call the dataframe `BMI` because it has data for both height and weight variables.
+-   `aes()`: this goes within the ggplot function. Here, identify the variables to be associated with the $x$-axis and $y$-axis of any graph produced.
+-   `geom_line`: this tells `ggplot` that the type of graph to represent each weight observation over time is with a continuous line.
 
--   ggplot(): identifies the dataframe and the aesthetics with the aes() attribute. In this case, we will call the dataframe ‘BMI’ because it has data for both height and weight variables.
--   aes(): this goes within the ggplot function. Here, identify the variables to be associated with the x-axis and y-axis of any graph produced. Notice here we added group= and will identify the sex variable in order to tell RStudio we want each sex to have its own line in the graph.
--   geom_line(): this tells ggplot that the type of graph to represent each weight observation over time is with a continuous line.
+31. Add a title to the graph and change the appearance of the axes labels, we can add a new layer to the graph with: `+ labs(x = "New X label", y = "New Y label", title = "Graph title")` after the `geom_line` call.
+32. Run the command(s) and view the plot(s).
 
-35. If we want to add a title to the graph and change the appearance of the axis labels, we can add a new layer to the graph with: + labs(x= “New X label”, y= “New Y label”, title= “Graph title”) after the geom call (Figure 7).
-36. Highlight the command and click Run. To view the graph in the plots panel, highlight or type the object name) and click Run (Figure 8).
-37. It would be even more meaningful yet to have each line in a different color for each sex. To do this, modify the code from section H or begin a new command in which we tell R to vary colors by a particular variable. The generic syntax is: Object \<- ggplot(Dataframe, aes(x variable, y variable, group=GroupingVariable, color=GroupingVariable)) + geom_line() (Figure 9).
+```{r}
+ggplot(BMI, aes(x = Height.m, y = Weight.kg)) +
+  geom_line() +
+  labs(x = "Height (m)", y = "Weight (kg)") +
+  theme_minimal() # plot with only basic lines
+```
 
--   ggplot(): identifies the dataframe and the aesthetics with the aes() attribute. In this case, we will call the dataframe ‘BMI’ because it has data for both height and weight variables.
--   aes(): this goes within the ggplot function. Here, identify the variables to be associated with the x-axis and y-axis of any graph produced. Notice here we have group=Sex and also add color=Sex to tell RStudio we want each sex to have its own line in the graph and the line representing each sex should be a different color.
--   geom_line(): this tells ggplot that the type of graph to represent each weight observation over time is with a continuous line.
+31. Notice that the resulting graph does not seem to make much sense. This is because in this case there were three observations for each time (one from a person of each sex category) and each individual observation is included on the graph.
 
-38. Highlight the command and click Run. Then, highlight the object name and click Run.
+### Section J. Create a line graph using package ggplot2 with an individual line for each sex 
+
+31. In this case, it would be more meaningful to have a separate line for *each* sex so we can better examine trends over time. To do this, modify the code from [Section G. Create a bar chart using package ggplot2] or begin a new command in which a grouping variable is identified. The generic syntax is:
+
+```{r,eval=FALSE}
+Object <- ggplot(Dataframe, aes(x_variable, y_variable, group = GroupingVariable)) + 
+  geom_line()
+```
+
+-   `ggplot`: identifies the dataframe and the aesthetics with the `aes()` attribute. In this case, we will call the dataframe `BMI` because it has data for both height and weight variables.
+-   `aes()`: this goes within the ggplot function. Here, identify the variables to be associated with the $x$-axis and $y$-axis of any graph produced.
+-   `geom_line`: this tells `ggplot` that the type of graph to represent each weight observation over time is with a continuous line.
+
+35. Add a title to the graph and change the appearance of the axes labels, we can add a new layer to the graph with: `+ labs(x = "New X label", y = "New Y label", title = "Graph title")` after the `geom_line` call.
+36. Run the command(s) to view the plot(s).
+
+```{r}
+ggplot(data = BMI, aes(x = Height.m, y = Weight.kg, group = Sex)) +
+  geom_line() +
+  labs(x = "Height (m)", y = "Weight (kg)") +
+  theme_minimal() # plot with only basic lines
+```
+
+35. It would be even more meaningful yet to have each line in a different color for each sex. To do this, modify the code from [Section H. Create an XY scatterplot using package ggplot2] or begin a new command in which we tell *R* to vary colors by a particular variable. The generic syntax is:
+
+```{r,eval=FALSE}
+Object <- ggplot(Dataframe, aes(x_variable, y_variable, 
+                                group = GroupingVariable, 
+                                color = GroupingVariable)) +
+  geom_line()
+```
+
+-   `ggplot`: identifies the dataframe and the aesthetics with the `aes()` attribute. In this case, we will call the dataframe `BMI` because it has data for both height and weight variables.
+-   `aes()`: this goes within the ggplot function. Here, identify the variables to be associated with the $x$-axis and $y$-axis of any graph produced.
+-   `geom_line`: this tells `ggplot` that the type of graph to represent each weight observation over time is with a continuous line.
+
+35. Run the command(s) to view the plot(s).
+
+```{r}
+ggplot(BMI, aes(x = Height.m, y = Weight.kg,
+                group = Sex, color = Sex)) +
+  geom_line() +
+  labs(x = "Height (m)", y = "Weight (kg)") +
+  theme_minimal() # plot with only basic lines
+```
 
 ## Problem Set 3 Assignment Directions and Questions:
 
-1.  (2 points) Repeat procedures in sections A and B with the monkey dataset to determine the mean and standard deviation, as well as the median and interquartile range of life spans for each sex (ignoring the food intake variable).
+1.  (**4 points**) Repeat procedures in [Section A. Calculate mean and standard deviation] and [Section B. Calculate median (50th), 25th and 75th percentiles, and interquartile range (IQR)] with the `Monkey` dataset to determine the mean and standard deviation, as well as the median and interquartile range of life spans for each sex (ignoring the food intake variable).
 
--   For full credit, round answers to the nearest 0.01.
+-   For full credit, round answers to the nearest 0.01. *Hint*: use the *R* function `round`.
 
-Descriptive statistic Female Male Mean Standard deviation
+| Statistic               | Nonbinary | Female | Male |
+|-------------------------|-----------|--------|------|
+| **Mean**                |           |        |      |
+| **Standard deviation**  |           |        |      |
+| **Median**              |           |        |      |
+| **Interquartile range** |           |        |      |
 
-2.  (2 points) Repeat procedures in sections A and B with the monkey dataset to determine the median and interquartile range of life spans for each sex (ignoring the food intake variable).
+3.  (**2 points**) Use the `BMI` dataset and package `ggplot2` to create a scatterplot with weight on the $x$-axis and V\$O\_{2}\$ max on the $y$-axis ([Section G. Create a bar chart using package ggplot2]). Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copy and paste image files or screenshots of your histograms in *Canvas*.
 
--   For full credit, round answers to the nearest 0.01.
+4.  (**2 points**) Use package `ggplot2` to create a line graph with V\$O\_{2}\$ max on the $y$-axis and Week on the $x$-axis ([Section I. Create a line graph using package ggplot2]). There should be one line for each sex and lines should be different colors. Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copy and paste image files or screenshots of your histograms in *Canvas*.
 
-Descriptive statistic Female Male Median Interquartile range
+5.  (**BONUS +1 point possible**) Putting together what you learned in [Section F. Clearly label axes] and [Section I. Create a line graph using package ggplot2], create a bar chart from the `Monkey` dataset in which sex is on the $x$-axis, average lifespan is on the $y$-axis, and bars are grouped and colored by food intake. What do you notice about the graph?
 
-3.  (2 points) Use package ggplot2 to create one boxplot with lifespan on the y-axis and each sex on the x-axis. Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copy-paste image files or screenshots of your histograms in Canvas.
+6.  (**BONUS +1 point possible**) In the code used for the previous question, change `color` in the `aes()` function to `fill`. Rerun the `ggplot` function. What do you notice about how the graph changed vs. the `color` function?
 
-4.  (2 points) Use package ggplot2 to create one bar chart with lifespan on the y-axis and each sex on the x-axis. Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copy-paste image files or screenshots of your histograms in Canvas.
+7.  (**BONUS +1 point possible**) Run the code from the previous question, but first add `position = "dodge"` to the `geom_bar` function. Be sure to use a comma `,` to separate it from other attributes. Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copy and paste image files or screenshots in *Canvas*. How did the graph change this time?
 
-5.  (2 points) Use the BMI dataset and package ggplot2 to create a scatterplot with weight on the x-axis and VO2 max on the y-axis (section G). Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copypaste image files or screenshots of your histograms in Canvas.
+8.  For the possibility of partial credit, compile your work in a single document and upload it in *Canvas*. Uploads as an `.r` file or an `.rmd` file are preferred. Submitting your work for the **Module 3 Problem Set Assignment**: You do not need to answer any questions included in the procedures sections, those are for your self-reflection only. Questions in *Canvas* may be worded slightly differently than here, usually for brevity, but with the same meaning. If there is a discrepancy in what is being asked between this document and the question form in *Canvas*, answer based on what is asked in this document. Also, please let me know as soon as possible so I can get it fixed.
 
-6.  (2 points) Use package ggplot2 to create a line graph with VO2 max on the y-axis and Week on the x-axis (section I). There should be one line for each sex and lines should be different colors. Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copy-paste image files or screenshots of your histograms in Canvas.
-
-7.  (BONUS +1 point possible) Putting together what you learned in sections F and I, create a bar chart from the monkey dataset in which sex is on the x-axis, average lifespan is on the y-axis, and bars are grouped and colored by food intake. What do you notice about the graph?
-
-8.  (BONUS +1 point possible) In the code used for the previous question, change “color” in the aes() function to “fill”. Rerun the ggplot() function. What do you notice about how the graph changed?
-
-9.  (BONUS +1 point possible) Run the code from the previous question, but first add position = “dodge” to the geom_bar() function. Be sure to use a comma to separate it from other attributes. Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copy-paste image files or screenshots in Canvas. How did the graph change this time?
-
-10. For the possibility of partial credit, compile your work in a single document and upload it in Canvas. Submitting your work for the Module 3 Problem Set Assignment: You do not need to answer any questions included in the procedures sections, those are for your self-reflection only. Questions in Canvas may be worded slightly differently than here, usually for brevity, but with the same meaning. If there is a discrepancy in what is being asked between this document and the question form in Canvas, answer based on what is asked in this document. Also, please let me know as soon as possible so I can get it fixed.
-
-Submit your work on or before the due date indicated on the assignment page.
+***Submit your work on or before the due date indicated on the assignment page.***
