@@ -1,0 +1,997 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.555">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="University of Nebraska at Kearney Dept. of Biology">
+
+<title>biol827-graduate_statistics - 2&nbsp; Modules 3 &amp; 4: Describing data, Uncertainty, and Probability</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./module5.html" rel="next">
+<link href="./intro.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./module3_4.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modules 3 &amp; 4: Describing data, Uncertainty, and Probability</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">biol827-graduate_statistics</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Search"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Preface</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module3_4.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modules 3 &amp; 4: Describing data, Uncertainty, and Probability</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./module5.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Learning objectives:</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./summary.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Summary</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">References</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Table of contents</h2>
+   
+  <ul>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction"><span class="header-section-number">3</span> Introduction</a>
+  <ul class="collapse">
+  <li><a href="#required-packages" id="toc-required-packages" class="nav-link" data-scroll-target="#required-packages"><span class="header-section-number">3.1</span> Required Packages</a></li>
+  </ul></li>
+  <li><a href="#module-3-problem-set" id="toc-module-3-problem-set" class="nav-link" data-scroll-target="#module-3-problem-set"><span class="header-section-number">4</span> Module 3 Problem Set</a>
+  <ul class="collapse">
+  <li><a href="#learning-objectives" id="toc-learning-objectives" class="nav-link" data-scroll-target="#learning-objectives"><span class="header-section-number">4.1</span> Learning Objectives</a></li>
+  <li><a href="#datasets" id="toc-datasets" class="nav-link" data-scroll-target="#datasets"><span class="header-section-number">4.2</span> Datasets</a>
+  <ul class="collapse">
+  <li><a href="#dataset-1" id="toc-dataset-1" class="nav-link" data-scroll-target="#dataset-1"><span class="header-section-number">4.2.1</span> Dataset 1</a></li>
+  <li><a href="#dataset-2" id="toc-dataset-2" class="nav-link" data-scroll-target="#dataset-2"><span class="header-section-number">4.2.2</span> Dataset 2</a></li>
+  </ul></li>
+  <li><a href="#procedure" id="toc-procedure" class="nav-link" data-scroll-target="#procedure"><span class="header-section-number">4.3</span> Procedure</a>
+  <ul class="collapse">
+  <li><a href="#section-a.-calculate-mean-and-standard-deviation" id="toc-section-a.-calculate-mean-and-standard-deviation" class="nav-link" data-scroll-target="#section-a.-calculate-mean-and-standard-deviation"><span class="header-section-number">4.3.1</span> Section A. Calculate mean and standard deviation</a></li>
+  <li><a href="#section-b.-calculate-median-50th-25th-and-75th-percentiles-and-interquartile-range-iqr" id="toc-section-b.-calculate-median-50th-25th-and-75th-percentiles-and-interquartile-range-iqr" class="nav-link" data-scroll-target="#section-b.-calculate-median-50th-25th-and-75th-percentiles-and-interquartile-range-iqr"><span class="header-section-number">4.3.2</span> Section B. Calculate median (50th), 25th and 75th percentiles, and interquartile range (IQR)</a></li>
+  <li><a href="#section-d.-optional-create-histogram-using-function-ggplot" id="toc-section-d.-optional-create-histogram-using-function-ggplot" class="nav-link" data-scroll-target="#section-d.-optional-create-histogram-using-function-ggplot"><span class="header-section-number">4.3.3</span> Section D. [Optional] Create histogram using function ggplot</a></li>
+  <li><a href="#section-e.-create-a-boxplot-using-package-ggplot2" id="toc-section-e.-create-a-boxplot-using-package-ggplot2" class="nav-link" data-scroll-target="#section-e.-create-a-boxplot-using-package-ggplot2"><span class="header-section-number">4.3.4</span> Section E. Create a boxplot using package ggplot2</a></li>
+  <li><a href="#section-f.-clearly-label-axes" id="toc-section-f.-clearly-label-axes" class="nav-link" data-scroll-target="#section-f.-clearly-label-axes"><span class="header-section-number">4.3.5</span> Section F. Clearly label axes</a></li>
+  <li><a href="#section-g.-create-a-bar-chart-using-package-ggplot2" id="toc-section-g.-create-a-bar-chart-using-package-ggplot2" class="nav-link" data-scroll-target="#section-g.-create-a-bar-chart-using-package-ggplot2"><span class="header-section-number">4.3.6</span> Section G. Create a bar chart using package ggplot2</a></li>
+  <li><a href="#section-h.-create-an-xy-scatterplot-using-package-ggplot2" id="toc-section-h.-create-an-xy-scatterplot-using-package-ggplot2" class="nav-link" data-scroll-target="#section-h.-create-an-xy-scatterplot-using-package-ggplot2"><span class="header-section-number">4.3.7</span> Section H. Create an XY scatterplot using package ggplot2</a></li>
+  <li><a href="#section-i.-create-a-line-graph-using-package-ggplot2" id="toc-section-i.-create-a-line-graph-using-package-ggplot2" class="nav-link" data-scroll-target="#section-i.-create-a-line-graph-using-package-ggplot2"><span class="header-section-number">4.3.8</span> Section I. Create a line graph using package ggplot2</a></li>
+  </ul></li>
+  <li><a href="#problem-set-3-assignment-directions-and-questions" id="toc-problem-set-3-assignment-directions-and-questions" class="nav-link" data-scroll-target="#problem-set-3-assignment-directions-and-questions"><span class="header-section-number">4.4</span> Problem Set 3 Assignment Directions and Questions:</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Modules 3 &amp; 4: Describing data, Uncertainty, and Probability</span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>University of Nebraska at Kearney Dept. of Biology </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="introduction" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Introduction</h1>
+<p>This is a markdown walkthrough of the problem sets for this week. Feel free to use it as a “follow along” for what is going on in the lectures! This particular document uses <code>rmarkdown</code>, which is a form of <em>R</em> in <em>RStudio</em> that allows you to create <code>.pdf</code> documents and print lines of code within the document itself.</p>
+<section id="required-packages" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="required-packages"><span class="header-section-number">3.1</span> Required Packages</h2>
+<p>We will use <em>tidyverse</em> to assist with data processing and plotting. Please note, when you install packages, you will see the installation details. I am hiding these details within this document to make it easier to read and follow.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># if running for the first time, install</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">install.packages</span>(<span class="st">"tidyverse"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># load tidyverse</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>If you ever need to cite this package, you can find the information like so:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">citation</span>(<span class="st">"tidyverse"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="do">## To cite package ‘tidyverse’ in publications use:</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co">#  Wickham H, Averick M, Bryan J, Chang W, McGowan LD,</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="co">#  François R, Grolemund G, Hayes A, Henry L, Hester J, Kuhn</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="co">#  M, Pedersen TL, Miller E, Bache SM, Müller K, Ooms J,</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="co">#  Robinson D, Seidel DP, Spinu V, Takahashi K, Vaughan D,</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="co">#  Wilke C, Woo K, Yutani H (2019). “Welcome to the</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co">#  tidyverse.” _Journal of Open Source Software_, *4*(43),</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="co">#  1686. doi:10.21105/joss.01686</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co">#  https://doi.org/10.21105/joss.01686.</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="co"># </span><span class="al">NOTE</span><span class="co">: A Bibtex version will also print</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Not shown here</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+</section>
+<section id="module-3-problem-set" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Module 3 Problem Set</h1>
+<section id="learning-objectives" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="learning-objectives"><span class="header-section-number">4.1</span> Learning Objectives</h2>
+<p>To continue gaining familiarity with the <em>R</em> statistical framework by using <em>RStudio</em> to:</p>
+<ul>
+<li>Calculate mean and standard deviation</li>
+<li>Calculate median, 25th and 75th percentiles, and interquartile range</li>
+<li>Install and activate package <code>ggplot2</code></li>
+<li>Use functions in <code>ggplot2</code> to create boxplots, bar charts, scatterplots, and line graphs.</li>
+</ul>
+<p><strong>NOTE</strong>: <code>ggplot2</code> is included within the <code>tidyverse</code> package installed at the beginning of this document.</p>
+</section>
+<section id="datasets" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="datasets"><span class="header-section-number">4.2</span> Datasets</h2>
+<p>We will be working with two fictional datasets. These datasets are available on the <em>Module 3 Problem Set Assignment</em> page in Canvas. Dataset 2 is similar to that used in the Module 2 problem set, but not exactly the same, so be sure to use the correct dataset for this problemset.</p>
+<section id="dataset-1" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="dataset-1"><span class="header-section-number">4.2.1</span> Dataset 1</h3>
+<p>In this study, researchers examined the effect of control versus reduced food intake (<code>FoodIntake</code>) on the longevity (<code>LifeSpan.yr</code>) of male and female (<code>Sex</code>) monkeys. These data are from Whitlock and Schluter (2015, 2nd Edition) problem 35, page 63.</p>
+<p>This dataset can be downloaded directly from <em>GitHub</em> with the following code:</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>Monkey</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<ul>
+<li><code>BIOL827.03 Problem Set Data 1.csv</code></li>
+</ul>
+</section>
+<section id="dataset-2" class="level3" data-number="4.2.2">
+<h3 data-number="4.2.2" class="anchored" data-anchor-id="dataset-2"><span class="header-section-number">4.2.2</span> Dataset 2</h3>
+<p>A researcher was conducting an exercise physiology study. The research team wanted to know whether volunteers of different sexes (<code>Sex</code>) differed in physical characteristics, especially Body Mass Index (<code>BMI</code>), over the first five weeks (<code>Week</code>) of the study and if there was a change in their oxygen consumption during exercise (V<span class="math inline">\(O_2\)</span> max, measured as mm/kg body weight) over this time. For each volunteer, the research team recorded the initial weight (<code>Weight.kg</code>), height (<code>Height.m</code>), and V<span class="math inline">\(O_2\)</span> max (<code>VO2</code>) of each participant. These data were randomly generated; any patterns are unintentional.</p>
+<ul>
+<li><code>BIOL827.03 Problem Set Data 2.csv</code></li>
+</ul>
+</section>
+</section>
+<section id="procedure" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="procedure"><span class="header-section-number">4.3</span> Procedure</h2>
+<p>Please note that this is not quite identical to the regular module PDFs, but is close.</p>
+<ol type="1">
+<li>Watch Module 3: Describing and Visualizing Data in R for a walk-through of these initial procedures. <em>Note</em> that this video will vary slightly from this particular document.</li>
+<li>Open a new <em>R</em> script in the source pane by clicking on the <code>File menu &gt; New File &gt; R Script</code>.</li>
+<li>If necessary, clear the environment and plots panes from R’s memory by clicking the broom icon at the top of both of these panes and clear the console by clicking on <code>Edit menu &gt; Clear Console</code>.</li>
+<li>Set your working directory and import both datasets. Review Modules 1 and 2 procedures, if necessary, for a reminder of how to complete these tasks.</li>
+</ol>
+<ul>
+<li>For these procedures and video, dataset 1 was imported as a <code>dataframe</code> object named ‘<code>Monkey</code>’, and dataset 2 as a <code>dataframe</code> object named ‘<code>BMI</code>’.</li>
+</ul>
+<p>Descriptive statistics refers to simple calculations that summarize or describe a given variable. Measures of central tendency commonly used are the <em>mean</em> (i.e., <em>average</em>) and <em>median</em> (i.e, <span class="math inline">\(50^{th}\)</span> percentile). Corresponding measures of spread are <em>standard deviation</em> (accompanying the mean) and <em>interquartile range</em> or <span class="math inline">\(25^{th}\)</span> and <span class="math inline">\(75^{th}\)</span> percentiles (accompanying the median).</p>
+<section id="section-a.-calculate-mean-and-standard-deviation" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="section-a.-calculate-mean-and-standard-deviation"><span class="header-section-number">4.3.1</span> Section A. Calculate mean and standard deviation</h3>
+<ol start="5" type="1">
+<li><p>Use the <code>Monkey</code> dataset (Data 1) to calculate the <em>mean</em> and <em>standard deviation</em> of <code>LifeSpan.yr</code> variable separately for each <code>FoodIntake</code> treatment (Control, Reduced) by hand using equations provided in the textbook. Afterwards, calculate these values using <em>RStudio</em>!</p></li>
+<li><p>To do this, subset the Monkey dataframe using the subset function. Create one subset with data for individuals in the reduced food intake group and one for those in the control group (Figure 1).</p></li>
+</ol>
+<ul>
+<li>Be sure to give each subset a unique object name to use below.</li>
+<li>Review use of the subset function in PS1 and PS2, if needed.</li>
+</ul>
+<ol start="7" type="1">
+<li>Next, activate the package ‘pastecs’ using the library() command (Figure 1) so you can use the stat.desc function.</li>
+</ol>
+<ul>
+<li>Review instructions for activating a package in PS2, if needed.</li>
+</ul>
+<ol start="8" type="1">
+<li>Run the function ‘stat.desc’ on the LifeSpan.yr variable for each subset (Control and Reduced) separately (Figure 1).</li>
+</ol>
+<ul>
+<li>If necessary, highlight the object name to print the output to the console pane.</li>
+</ul>
+<ol start="9" type="1">
+<li>Compare the mean and standard deviation (std.dev) for each food intake group to those you calculated by hand. They should be the same.</li>
+</ol>
+<ul>
+<li>Also, note the median is provided in this output.</li>
+</ul>
+</section>
+<section id="section-b.-calculate-median-50th-25th-and-75th-percentiles-and-interquartile-range-iqr" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="section-b.-calculate-median-50th-25th-and-75th-percentiles-and-interquartile-range-iqr"><span class="header-section-number">4.3.2</span> Section B. Calculate median (50th), 25th and 75th percentiles, and interquartile range (IQR)</h3>
+<p>Quantiles are a way of looking at the response value at which a given percentage of observations are captured. The most common quantiles are the 25th, 50th, and 75th percentiles. This specific set of quantiles are also called quartiles: 1st quartile (25th percentile), median (50th percentile), and 3rd quartile (75th percentile). The interquartile range (IQR) measures spread representing the middle 50% of observations; that is, 25% of observations fall below the 25th percentile and 25% of observations are above the 75th percentile.</p>
+<ol start="10" type="1">
+<li><p>Calculate the median, first quartile, third quartile, and interquartile range separately for each FoodIntake group (Control, Reduced) by hand using the information provided in the textbook and/or lecture material. Now, calculate it using RStudio.</p></li>
+<li><p>To do this, use the function ‘quantile’ separately for each FoodIntake group (Control, Reduced) using the command: object &lt;- quantile(Dataframe$Variable) (Figure 2).</p></li>
+</ol>
+<ul>
+<li>By default, the quantile function returns the following percentiles: 0%, 25%, 50%, 75%, 100%.</li>
+<li>Compare results for the 50% output from function quantile to the median calculated by hand and from stat.desc for each FoodIntake group. They should match.</li>
+</ul>
+<ol start="12" type="1">
+<li><p>Calculate IQR in RStudio using function ‘IQR’ separately for each FoodIntake group (Control, Reduced) using the command: <code>object &lt;- IQR(Dataframe$Variable)</code> (Figure 2).</p></li>
+<li><p>Compare these values to those you computed by hand. They should be the same. Section C. Install and activate the ggplot2 R add-on package</p></li>
+<li><p>Click on the Packages tab in the lower-right panel and install ggplot2.</p></li>
+</ol>
+<ul>
+<li>Review instructions on how to install a package in PS2, if needed.</li>
+</ul>
+<ol start="15" type="1">
+<li>Once installed, go to the source panel and activate the package (Figure 3).</li>
+</ol>
+<ul>
+<li>Review instructions on how to activate a package in PS2, if needed.</li>
+</ul>
+</section>
+<section id="section-d.-optional-create-histogram-using-function-ggplot" class="level3" data-number="4.3.3">
+<h3 data-number="4.3.3" class="anchored" data-anchor-id="section-d.-optional-create-histogram-using-function-ggplot"><span class="header-section-number">4.3.3</span> Section D. [Optional] Create histogram using function ggplot</h3>
+<p>There are multiple ways to graph data in R, to illustrate we can compare histograms produced using the hist() function from PS1 and PS2 and using function ggplot() in the ggplot2 package.</p>
+<ol start="16" type="1">
+<li>For each FoodIntake group (Reduced, Control), create a histogram using the function hist (Figure 3).</li>
+</ol>
+<ul>
+<li>Review instructions on how to do this in PS1, if needed.</li>
+</ul>
+<ol start="17" type="1">
+<li>For each FoodIntake group (Reduced, Control), create a histogram using the function ggplot. ggplot has the generic syntax: Object &lt;- ggplot(Dataframe, aes(x.variable, y.variable)) + geom_histogram() (Figure 3).</li>
+</ol>
+<ul>
+<li>ggplot(): identifies the dataframe and the aesthetics with the aes() attribute.</li>
+<li>aes(): goes within the ggplot function. Here, identify the variables to be associated with the x-axis and y-axis of any graph produced. Other attributes can also be specified here, but we’ll get to more on that later.</li>
+<li>geom_histogram(): this tells ggplot that the type of graph to make is a histogram.</li>
+</ul>
+<ol start="18" type="1">
+<li><p>Highlight the command and click Run. To view the graph in the plots panel, highlight or type the object name) and click Run.</p></li>
+<li><p>Compare the histograms created by the hist function to those from ggplot. They should look very different. This is because the default in ggplot() is to create histograms with 30 bins, while the number of bins in the graph created with the hist() function is determined by an algorithm and on the nature of observations in the dataset.</p></li>
+<li><p>Change the number of bins in the ggplot histogram by adding bins=5 or bins=6 inside the parentheses of the geom_histogram function (Figure 4).</p></li>
+</ol>
+</section>
+<section id="section-e.-create-a-boxplot-using-package-ggplot2" class="level3" data-number="4.3.4">
+<h3 data-number="4.3.4" class="anchored" data-anchor-id="section-e.-create-a-boxplot-using-package-ggplot2"><span class="header-section-number">4.3.4</span> Section E. Create a boxplot using package ggplot2</h3>
+<ol start="21" type="1">
+<li>Create one boxplot that illustrates both FoodIntake groups (Reduced, Control) on the x-axis using function ggplot. The generic syntax is: Object &lt;- ggplot(Dataframe, aes(x.variable, y.variable)) + geom_boxplot() (Figure 5).</li>
+</ol>
+<ul>
+<li>ggplot(): identifies the dataframe and the aesthetics with the aes() attribute. In this case, we will call the dataframe ‘Monkey’ because it has data for both Control and Reduced food intake groups.</li>
+</ul>
+<p>Box 1. ggplot function syntax object &lt;- ggplot(dataframe, aes(x, y)) + geom_() The ggplot2 package includes a wide variety of options for the content and format of graphs – both in the types of graphs drawn and how they are formatted. We will keep it to the simplest basics this week and introduce additional options later. Types of graphs we will work with this week:</p>
+<ul>
+<li>geom_histogram(): creates a frequency histogram, only a y variable needs to be identified in the ggplot() portion of the command.</li>
+<li>geom_boxplot(): creates a boxplot displaying the medan (bold line), 1st and 3rd quartiles (box), 1.5 times the iqr (whiskers), and outliers (circles).</li>
+<li>geom_bar(): creates a bar chart. if specified, the x variable should represent categories to be graphed separately.</li>
+<li>geom_point(): creates an xy scatterplot. both x and y variables should have numeric data.</li>
+<li>geom_line(): creates a line plot. typically, a time variable is represented on the x-axis. Customization introduced this week:</li>
+<li>To create graphs with groupings, include a group=GroupingVariable attribute after the y variable in aes() so it becomes aes(x, y, group=).</li>
+<li>To have a different color represent each group, also add a color=“ColorName” attribute after the group attribute so it becomes aes(x, y, group=, color=).</li>
+<li>To change the axis labels, add + labs(x=NewXName, y=NewYName, title=”Graph title”) after the geom() portion of the command.</li>
+<li>aes(): this goes within the ggplot function. Here, identify the variables to be associated with the x-axis and y-axis of any graph produced.</li>
+<li>geom_boxplot(): this tells ggplot that the type of graph to make is a standard boxplot (see more in Box 1).</li>
+</ul>
+<ol start="22" type="1">
+<li>Highlight the command and click Run. To view the graph in the plots panel, highlight or type the object name) and click Run.</li>
+</ol>
+</section>
+<section id="section-f.-clearly-label-axes" class="level3" data-number="4.3.5">
+<h3 data-number="4.3.5" class="anchored" data-anchor-id="section-f.-clearly-label-axes"><span class="header-section-number">4.3.5</span> Section F. Clearly label axes</h3>
+<p>It is important to clearly label axes to indicate the variable(s) plotted avoiding abbreviations and acronyms as much as possible. Axes labels should always also indicate the unit of measurement that graphed values represent.</p>
+<ol start="23" type="1">
+<li><p>Add a title to the graph and change the appearance of the axis labels by adding a new layer to the graph created in Section E. After geom_boxplot() and on the same line, add “+”</p></li>
+<li><p>Go to a new line, and add: labs(x= “x label (units)”, y= “y label (units)”, title= “Graph title”) where the label and units for the x and y axes and graph title are typed within the quotation marks. (For example, see line 58 in Figure 6 below).</p></li>
+</ol>
+</section>
+<section id="section-g.-create-a-bar-chart-using-package-ggplot2" class="level3" data-number="4.3.6">
+<h3 data-number="4.3.6" class="anchored" data-anchor-id="section-g.-create-a-bar-chart-using-package-ggplot2"><span class="header-section-number">4.3.6</span> Section G. Create a bar chart using package ggplot2</h3>
+<ol start="25" type="1">
+<li>Create one bar chart that illustrates the mean lifespan for each FoodIntake group (Reduced, Control) on the x-axis using function ggplot. The generic syntax is: Object &lt;- ggplot(Dataframe, aes(x variable, y variable)) + geom_bar(stat=“summary”, fun=“mean”) (Figure 5).</li>
+</ol>
+<ul>
+<li>ggplot(): identifies the dataframe and the aesthetics with the aes() attribute. In this case, we will call the dataframe ‘Monkey’ because it has data for both Control and Reduced food intake groups.</li>
+<li>aes(): this goes within the ggplot function. Here, identify the variables to be associated with the x-axis and y-axis of any graph produced. Other attributes can also be specified here, but we’ll get to that more later.</li>
+<li>geom_bar(stat=“summary”, fun=“mean”): this tells ggplot that the type of graph to make is a bar chart and that the values to graph are mean life span calculated from summary statistics.</li>
+</ul>
+<ol start="26" type="1">
+<li>Highlight the command and click Run. To view the graph in the plots panel, highlight or type the object name) and click Run.</li>
+</ol>
+</section>
+<section id="section-h.-create-an-xy-scatterplot-using-package-ggplot2" class="level3" data-number="4.3.7">
+<h3 data-number="4.3.7" class="anchored" data-anchor-id="section-h.-create-an-xy-scatterplot-using-package-ggplot2"><span class="header-section-number">4.3.7</span> Section H. Create an XY scatterplot using package ggplot2</h3>
+<ol start="27" type="1">
+<li>Import the second dataset containing the BMI project data.</li>
+</ol>
+<ul>
+<li>For illustrations here and in the video, I called this dataframe ‘BMI’.</li>
+</ul>
+<ol start="28" type="1">
+<li>Create one scatterplot that illustrates the relationship between height on the x-axis and weight on the y-axis using function ggplot. The generic syntax is: Object &lt;- ggplot(Dataframe, aes(x variable, y variable)) + geom_point() (Figure 6).</li>
+</ol>
+<ul>
+<li>ggplot(): identifies the dataframe and the aesthetics with the aes() attribute. In this case, we will call the dataframe ‘BMI’ because it has data for both height and weight variables.</li>
+<li>aes(): this goes within the ggplot function. Here, identify the variables to be associated with the x-axis and y-axis of any graph produced.</li>
+<li>geom_point(): this tells ggplot that the type of graph to represent each set of height-weight observations as a point.</li>
+</ul>
+<ol start="29" type="1">
+<li>Highlight the command and click Run. To view the graph in the plots panel, highlight or type the object name) and click Run.</li>
+</ol>
+</section>
+<section id="section-i.-create-a-line-graph-using-package-ggplot2" class="level3" data-number="4.3.8">
+<h3 data-number="4.3.8" class="anchored" data-anchor-id="section-i.-create-a-line-graph-using-package-ggplot2"><span class="header-section-number">4.3.8</span> Section I. Create a line graph using package ggplot2</h3>
+<ol start="30" type="1">
+<li>Create one line graph that illustrates changes in weight (on the y-axis) over time (on the x-axis) using function ggplot. The generic syntax is: Object &lt;- ggplot(Dataframe, aes(x variable, y variable)) + geom_line() (Figure 6).</li>
+</ol>
+<ul>
+<li>ggplot(): identifies the dataframe and the aesthetics with the aes() attribute. In this case, we will call the dataframe ‘BMI’ because it has data for both height and weight variables.</li>
+<li>aes(): this goes within the ggplot function. Here, identify the variables to be associated with the x-axis and y-axis of any graph produced.</li>
+<li>geom_line(): this tells ggplot that the type of graph to represent each weight observation over time is with a continuous line.</li>
+</ul>
+<ol start="31" type="1">
+<li>Add a title to the graph and change the appearance of the axis labels, we can add a new layer to the graph with: + labs(x= “New X label”, y= “New Y label”, title= “Graph title”) after the geom call (line 58 in Figure 6).</li>
+<li>Highlight the command and click Run. To view the graph in the plots panel, highlight or type the object name) and click Run.</li>
+<li>Notice that the resulting graph does not seem to make much sense. This is because in this case there were three observations for each time (one from a person of each sex category) and each individual observation is included on the graph. ### Section J. Create a line graph using package ggplot2 with an individual line for each sex</li>
+<li>In this case, it would be more meaningful to have a separate line for each sex so we can better examine trends over time. To do this, modify the code from section G or begin a new command in which a grouping variable is identified. The generic syntax is: Object &lt;- ggplot(Dataframe, aes(x variable, y variable, group=GroupingVariable)) + geom_line() (Figure 7).</li>
+</ol>
+<ul>
+<li>ggplot(): identifies the dataframe and the aesthetics with the aes() attribute. In this case, we will call the dataframe ‘BMI’ because it has data for both height and weight variables.</li>
+<li>aes(): this goes within the ggplot function. Here, identify the variables to be associated with the x-axis and y-axis of any graph produced. Notice here we added group= and will identify the sex variable in order to tell RStudio we want each sex to have its own line in the graph.</li>
+<li>geom_line(): this tells ggplot that the type of graph to represent each weight observation over time is with a continuous line.</li>
+</ul>
+<ol start="35" type="1">
+<li>If we want to add a title to the graph and change the appearance of the axis labels, we can add a new layer to the graph with: + labs(x= “New X label”, y= “New Y label”, title= “Graph title”) after the geom call (Figure 7).</li>
+<li>Highlight the command and click Run. To view the graph in the plots panel, highlight or type the object name) and click Run (Figure 8).</li>
+<li>It would be even more meaningful yet to have each line in a different color for each sex. To do this, modify the code from section H or begin a new command in which we tell R to vary colors by a particular variable. The generic syntax is: Object &lt;- ggplot(Dataframe, aes(x variable, y variable, group=GroupingVariable, color=GroupingVariable)) + geom_line() (Figure 9).</li>
+</ol>
+<ul>
+<li>ggplot(): identifies the dataframe and the aesthetics with the aes() attribute. In this case, we will call the dataframe ‘BMI’ because it has data for both height and weight variables.</li>
+<li>aes(): this goes within the ggplot function. Here, identify the variables to be associated with the x-axis and y-axis of any graph produced. Notice here we have group=Sex and also add color=Sex to tell RStudio we want each sex to have its own line in the graph and the line representing each sex should be a different color.</li>
+<li>geom_line(): this tells ggplot that the type of graph to represent each weight observation over time is with a continuous line.</li>
+</ul>
+<ol start="38" type="1">
+<li>Highlight the command and click Run. Then, highlight the object name and click Run.</li>
+</ol>
+</section>
+</section>
+<section id="problem-set-3-assignment-directions-and-questions" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="problem-set-3-assignment-directions-and-questions"><span class="header-section-number">4.4</span> Problem Set 3 Assignment Directions and Questions:</h2>
+<ol type="1">
+<li>(2 points) Repeat procedures in sections A and B with the monkey dataset to determine the mean and standard deviation, as well as the median and interquartile range of life spans for each sex (ignoring the food intake variable).</li>
+</ol>
+<ul>
+<li>For full credit, round answers to the nearest 0.01.</li>
+</ul>
+<p>Descriptive statistic Female Male Mean Standard deviation</p>
+<ol start="2" type="1">
+<li>(2 points) Repeat procedures in sections A and B with the monkey dataset to determine the median and interquartile range of life spans for each sex (ignoring the food intake variable).</li>
+</ol>
+<ul>
+<li>For full credit, round answers to the nearest 0.01.</li>
+</ul>
+<p>Descriptive statistic Female Male Median Interquartile range</p>
+<ol start="3" type="1">
+<li><p>(2 points) Use package ggplot2 to create one boxplot with lifespan on the y-axis and each sex on the x-axis. Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copy-paste image files or screenshots of your histograms in Canvas.</p></li>
+<li><p>(2 points) Use package ggplot2 to create one bar chart with lifespan on the y-axis and each sex on the x-axis. Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copy-paste image files or screenshots of your histograms in Canvas.</p></li>
+<li><p>(2 points) Use the BMI dataset and package ggplot2 to create a scatterplot with weight on the x-axis and VO2 max on the y-axis (section G). Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copypaste image files or screenshots of your histograms in Canvas.</p></li>
+<li><p>(2 points) Use package ggplot2 to create a line graph with VO2 max on the y-axis and Week on the x-axis (section I). There should be one line for each sex and lines should be different colors. Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copy-paste image files or screenshots of your histograms in Canvas.</p></li>
+<li><p>(BONUS +1 point possible) Putting together what you learned in sections F and I, create a bar chart from the monkey dataset in which sex is on the x-axis, average lifespan is on the y-axis, and bars are grouped and colored by food intake. What do you notice about the graph?</p></li>
+<li><p>(BONUS +1 point possible) In the code used for the previous question, change “color” in the aes() function to “fill”. Rerun the ggplot() function. What do you notice about how the graph changed?</p></li>
+<li><p>(BONUS +1 point possible) Run the code from the previous question, but first add position = “dodge” to the geom_bar() function. Be sure to use a comma to separate it from other attributes. Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copy-paste image files or screenshots in Canvas. How did the graph change this time?</p></li>
+<li><p>For the possibility of partial credit, compile your work in a single document and upload it in Canvas. Submitting your work for the Module 3 Problem Set Assignment: You do not need to answer any questions included in the procedures sections, those are for your self-reflection only. Questions in Canvas may be worded slightly differently than here, usually for brevity, but with the same meaning. If there is a discrepancy in what is being asked between this document and the question form in Canvas, answer based on what is asked in this document. Also, please let me know as soon as possible so I can get it fixed.</p></li>
+</ol>
+<p>Submit your work on or before the due date indicated on the assignment page.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./intro.html" class="pagination-link" aria-label="Introduction">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Introduction</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./module5.html" class="pagination-link" aria-label="Learning objectives:">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Learning objectives:</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

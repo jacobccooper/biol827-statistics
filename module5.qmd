@@ -1,0 +1,50 @@
+# Learning objectives:
+
+This problem set will provide an opportunity to:
+
+-   Compare mean and estimated 95% confidence intervals of samples,
+-   Determine null and alternative hypotheses.
+-   Evaluate relationships between a test statistic *p*-value, and significance level.
+-   Consider differences between one-sided and two-sided statistical tests and their effects on interpretation of biological questions.
+
+# Datasets:
+
+We will be working with a hypothetical `popcorn` dataset available on *GitHub*.
+
+# Questions:
+
+A study was done to examine the effect of cooking method on the percentage of popcorn kernels remaining unpopped to determine which method would be most efficient use of limited popcorn supplies at a major sporting stadium. They conducted an experiment using 60 lots of Snow Puff variety corn kernels with each lot randomly assigned to being cooked using either a microwave oven or a conventional popper method. Researchers expected conventional cooking to result in fewer unpopped kernels than microwave cooking.
+
+1.  For each sample (`Conventional`, `Microwave`), calculate mean and 95% confidence interval. Round to the nearest 0.01 for full credit. *Hint*: use the *R* function `round`. (**4 points**)
+
+2.  Create a point graph illustrating the mean and confidence interval of each sample. (**4 points**)
+
+-   You will be asked to paste an image/screenshot of your graph in *Canvas.*
+
+3.  Based on the mean and 95% confidence interval, do you think the percent of unpopped kernels differs between cooking methods? Why or why not? (**2 points**)
+
+Prior to the study, the research team decided to use significance level $\alpha=0.05$. They conducted a one-sided *t*-test of the null hypothesis: percent unpopped kernels cooked with the conventional method is less than or equal to unpopped kernels cooked with the microwave method (i.e., $H_0: conventional \le microwave$). They found the following: *t*-statistic (the test statistic) $t = -3.2863$, $p = 0.9991$.
+
+4.  What is the alternative hypothesis? (**3 points**)
+
+5.  Based on the result of the statistical test, what is the statistical conclusion (reject the null hypothesis or fail to reject the null hypothesis)? (**3 points**)
+
+6.  What does this statistical test result mean in terms of their original question? (**3 points**)
+
+7.  If researchers had instead planned to use a significance level $\alpha=0.10$, would the statistical conclusion have been different? Why or why not? (**3 points**)
+
+8.  If researchers had instead planned to use a two-sided statistical test, what would have been the statistical null hypothesis? Alternative hypothesis? (**3 points**)
+
+9.  Based on what you have learned in this module, do you think results of a two-sided *t*-test would have led to a different statistical conclusion? Why or why not? (**3 points**)
+
+10. Given the ultimate objective of this work (described above), would you use a one-sided *t*-test as they did here or a two-sided *t*-test if you were to replicate this experiment? Why? (**3 points**)
+
+# Extra credit opportunity
+
+11. Complete Assignment Problem about research in Tikal National Park, Guatemala, in Chapter 6 of Whitlock and Schluter (Q20 in 2 nd edition; Q21 in 3rd edition). (**+1 point possible**)
+
+-   In *Canvas*, each species in the table associated with this question will be listed and you will be asked to indicate if that species demonstrated a statistically significant reduction, increase, or no difference in density near ruins compared to far from ruins based on information provided in that table (equivalent to parts a-c). You will also be asked to select the species showing the strongest evidence for an effect of distance from ruins (equivalent to part d).
+
+# Submitting your work:
+
+This Problem Set Assignment is set up using a Quiz format. I recommend compiling your responses to all aspects of this assignment before beginning to fill in the form. You will have the opportunity to upload a single file (`.doc(x)` or `.pdf`) in which you show your work for the possibility of partial credit. Complete the assignment as directed by entering your work into the *Module 5 Problem Set Assignment* quiz page in *Canvas* on or before the due date indicated on the assignment page.
