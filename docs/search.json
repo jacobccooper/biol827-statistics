@@ -1,5 +1,25 @@
 [
   {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "biol827-graduate_statistics",
+    "section": "",
+    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n1 + 1\n\n[1] 2",
+    "crumbs": [
+      "Preface"
+    ]
+  },
+  {
+    "objectID": "intro.html",
+    "href": "intro.html",
+    "title": "1  Introduction",
+    "section": "",
+    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
+    "crumbs": [
+      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
+    ]
+  },
+  {
     "objectID": "module3_4.html",
     "href": "module3_4.html",
     "title": "2  Modules 3 & 4: Describing data, Uncertainty, and Probability",
@@ -57,26 +77,6 @@
     "text": "4.4 Problem Set 3 Assignment Directions and Questions:\n\n(4 points) Repeat procedures in Section A. Calculate mean and standard deviation and Section B. Calculate median (50th), 25th and 75th percentiles, and interquartile range (IQR) with the Monkey dataset to determine the mean and standard deviation, as well as the median and interquartile range of life spans for each sex (ignoring the food intake variable).\n\n\nFor full credit, round answers to the nearest 0.01. Hint: use the R function round.\n\n\n\n\nStatistic\nNonbinary\nFemale\nMale\n\n\n\n\nMean\n\n\n\n\n\nStandard deviation\n\n\n\n\n\nMedian\n\n\n\n\n\nInterquartile range\n\n\n\n\n\n\n\n(2 points) Use the BMI dataset and package ggplot2 to create a scatterplot with weight on the \\(x\\)-axis and V$O_{2}$ max on the \\(y\\)-axis (Section G. Create a bar chart using package ggplot2). Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copy and paste image files or screenshots of your histograms in Canvas.\n(2 points) Use package ggplot2 to create a line graph with V$O_{2}$ max on the \\(y\\)-axis and Week on the \\(x\\)-axis (Section I. Create a line graph using package ggplot2). There should be one line for each sex and lines should be different colors. Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copy and paste image files or screenshots of your histograms in Canvas.\n(BONUS +1 point possible) Putting together what you learned in Section F. Clearly label axes and Section I. Create a line graph using package ggplot2, create a bar chart from the Monkey dataset in which sex is on the \\(x\\)-axis, average lifespan is on the \\(y\\)-axis, and bars are grouped and colored by food intake. What do you notice about the graph?\n(BONUS +1 point possible) In the code used for the previous question, change color in the aes() function to fill. Rerun the ggplot function. What do you notice about how the graph changed vs. the color function?\n(BONUS +1 point possible) Run the code from the previous question, but first add position = \"dodge\" to the geom_bar function. Be sure to use a comma , to separate it from other attributes. Be sure axes are clearly labeled and include units of measure if applicable. You will be asked to insert or copy and paste image files or screenshots in Canvas. How did the graph change this time?\nFor the possibility of partial credit, compile your work in a single document and upload it in Canvas. Uploads as an .r file or an .rmd file are preferred. Submitting your work for the Module 3 Problem Set Assignment: You do not need to answer any questions included in the procedures sections, those are for your self-reflection only. Questions in Canvas may be worded slightly differently than here, usually for brevity, but with the same meaning. If there is a discrepancy in what is being asked between this document and the question form in Canvas, answer based on what is asked in this document. Also, please let me know as soon as possible so I can get it fixed.\n\nSubmit your work on or before the due date indicated on the assignment page.",
     "crumbs": [
       "<span class='chapter-number'>2</span>  <span class='chapter-title'>Modules 3 & 4: Describing data, Uncertainty, and Probability</span>"
-    ]
-  },
-  {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "biol827-graduate_statistics",
-    "section": "",
-    "text": "Preface\nThis is a Quarto book.\nTo learn more about Quarto books visit https://quarto.org/docs/books.\n\n1 + 1\n\n[1] 2",
-    "crumbs": [
-      "Preface"
-    ]
-  },
-  {
-    "objectID": "intro.html",
-    "href": "intro.html",
-    "title": "1  Introduction",
-    "section": "",
-    "text": "This is a book created from markdown and executable code.\nSee Knuth (1984) for additional discussion of literate programming.\n\n1 + 1\n\n[1] 2\n\n\n\n\n\n\nKnuth, Donald E. 1984. “Literate Programming.” Comput. J. 27 (2): 97–111. https://doi.org/10.1093/comjnl/27.2.97.",
-    "crumbs": [
-      "<span class='chapter-number'>1</span>  <span class='chapter-title'>Introduction</span>"
     ]
   },
   {
